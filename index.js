@@ -12,6 +12,7 @@ const transporter = nodemailer.createTransport({
     pass: Password,
   },
 });
+
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -48,14 +49,14 @@ app.get("/sendMail", async (req, res, next) => {
     };
     transporter.sendMail(mailOptions, (erro, info) => {
       if (erro) {
-        return res.send(erro.toString());
+        return res.status(200).json(erro.toString());
       }
       return res
         .status(200)
         .json({ dataSent: req.body, RESPONCE: "Email Sent" });
     });
   } catch (error) {
-    return res.status(500).json({
+    return res.status(200).json({
       message:
         "Something went wrong on server ,if problem continues then please contact hussnain77133@gmail.com",
     });
