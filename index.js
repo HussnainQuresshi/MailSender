@@ -56,19 +56,19 @@ app.get("/sendMail", async (req, res, next) => {
     };
     transporter.sendMail(mailOptions, (erro, info) => {
       if (erro) {
-        return res.status(200).json(erro.toString());
+        return res.status(400).json(erro.toString());
       }
       transporter.sendMail(mailOptions2, (erro, info) => {
         if (erro) {
-          return res.status(200).json(erro.toString());
+          return res.status(400).json(erro.toString());
         }
         return res
           .status(200)
-          .json({ dataSent: req.body, RESPONCE: "Email Sent" });
+          .json({ dataSent: req.body, RESPONCE: "Emails Sent Successfully" });
       });
     });
   } catch (error) {
-    return res.status(200).json({
+    return res.status(400).json({
       message:
         "Something went wrong on server ,if problem continues then please contact hussnain77133@gmail.com",
     });
@@ -76,14 +76,14 @@ app.get("/sendMail", async (req, res, next) => {
 });
 
 app.get("*", function (req, res) {
-  res.status(200).json({
+  return res.status(400).json({
     Success: true,
     message: "You can Only send post req to sendMail",
   });
 });
 
 app.post("*", function (req, res) {
-  res.status(200).json({
+  return res.status(400).json({
     Success: true,
     message: "You can Only send Post req to sendMail",
   });
